@@ -11,9 +11,22 @@ export const FileInput = ({ setDataFile }) => {
   const handleFileInputChange = (event) => {
     const fileObj = event.target.files && event.target.files[0];
     if (!fileObj) return;
+
     event.target.value = null;
-    console.log(fileObj.name);
-    setDataFile(fileObj);
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        setDataFile(data);
+        console.log(data);
+      } catch (error) {
+        alert('Invalid JSON file');
+      }
+    };
+
+    reader.readAsText(fileObj);
   };
 
   return (
