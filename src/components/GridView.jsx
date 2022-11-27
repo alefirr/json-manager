@@ -1,19 +1,21 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { Cell } from './Cell.jsx';
+import produce from 'immer';
 
-export const GridView = ({ dataFile }) => {
-  const [keys, setKeys] = useState([]);
+export const GridView = ({ dataFile, setDataFile }) => {
+  const keys = useMemo(
+    () => dataFile?.map((item) => Object.keys(item)).shift(),
+    [dataFile]
+  );
 
-  useEffect(() => {
-    if (dataFile) {
-      const keys = dataFile.map((item) => Object.keys(item)).shift();
-
-      setKeys(keys);
-      console.log(keys);
-    }
-  }, [dataFile]);
-
+  const onInputChange = (e, indexRow, val) => {
+    const newDataFile = produce(dataFile, (draft) => {
+      draft[indexRow][val] = e.target.value;
+    });
+    setDataFile(newDataFile);
+  };
+  console.log(dataFile);
   // useEffect(() => {
   //   if (dataFile) {
   //     const keysArr = Object.keys(dataFile[0]);
@@ -28,13 +30,13 @@ export const GridView = ({ dataFile }) => {
 
   return (
     <div className="grid-view-container">
-      {dataFile?.map((_, indexRow) => (
-        <div key={`row-${indexRow}`}>
-          {keys.map((val, indexCol) => (
+      {dataFile?.map((obj, indexRow) => (
+        <div key={`row-${indexRow}`} className="row-grid-view">
+          {keys?.map((val, indexCol) => (
             <Cell
-              rowValue={dataFile[indexRow]}
-              keyValue={val}
-              key={`cell-${indexRow}-${indexCol}`}
+              value={obj[val]}
+              onCellEdit={(e) => onInputChange(e, indexRow, val)}
+              key={`cell-${indexCol}`}
             />
           ))}
         </div>

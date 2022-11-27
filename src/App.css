@@ -7,8 +7,9 @@
   justify-content: center;
 
   width: 100vw;
+  height: max-content;
   position: relative;
-  top: 50px;
+  top: 30px;
 }
 
 .file-input-button {
@@ -40,7 +41,26 @@
   top: 6px;
 }
 
+.grid-view-container {
+  display: grid;
+  gap: 10px;
+  width: 80vw;
+  position: relative;
+  top: 100px;
+  overflow: scroll;
+}
+
+.row-grid-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 .cell {
   width: fit-content;
-  height: 50px;
+  height: 40px;
+  border: 2px solid rgb(7, 75, 151);
+  border-radius: 5px;
 }
