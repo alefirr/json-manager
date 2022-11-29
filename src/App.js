@@ -7,7 +7,7 @@ function App() {
 
   return (
     <div className="main-container">
-      <FileInput setDataFile={setDataFile} />
+      <FileInput setDataFile={setDataFile} dataFile={dataFile} />
       <GridView dataFile={dataFile} setDataFile={setDataFile} />
     </div>
   );

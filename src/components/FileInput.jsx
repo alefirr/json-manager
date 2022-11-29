@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef } from 'react';
 
-export const FileInput = ({ setDataFile }) => {
+export const FileInput = ({ setDataFile, dataFile }) => {
   const fileRef = useRef(null);
 
   const onChooseFileButtonClick = () => {
@@ -29,6 +29,13 @@ export const FileInput = ({ setDataFile }) => {
     reader.readAsText(fileObj);
   };
 
+  const onSaveFileButtonClick = () => {
+    if (!dataFile) {
+      alert('Don`t hurry to save an empty file');
+      return;
+    }
+  };
+
   return (
     <div className="file-input-container">
       <input
@@ -40,6 +47,12 @@ export const FileInput = ({ setDataFile }) => {
       />
       <button onClick={onChooseFileButtonClick} className="file-input-button">
         Choose a file
+      </button>
+      <button
+        className="file-input-button save-button"
+        onClick={onSaveFileButtonClick}
+      >
+        Save
       </button>
     </div>
   );
